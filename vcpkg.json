@@ -1,0 +1,41 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
+  "name": "car-database",
+  "version-string": "0.1.0",
+  "dependencies": [
+    {
+      "name": "gtest"
+      
+    },
+    {
+      "name": "sdl2"
+    },
+    {
+      "name": "imgui",
+      "features": ["sdl2-binding", "sdl2-renderer-binding", "opengl3-binding", "opengl2-binding", "glfw-binding"]
+    },
+    {
+      "name": "glew"
+    },
+    {
+      "name": "glfw3"
+    },
+    {
+      "name": "opengl"
+    },
+    {
+      "name": "glad"
+    },
+    {
+      "name": "openmpi",
+      "platform": "!windows"
+    },
+    {
+      "name" : "implot"
+    },
+    {
+      "name": "opencv4"
+    }
+
+  ]
+}

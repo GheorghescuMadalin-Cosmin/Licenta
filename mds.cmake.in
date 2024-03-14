@@ -1,0 +1,8 @@
+set(MDS_VERSION x.y.z)
+...
+@PACKAGE_INIT@
+...
+set_and_check(MDS_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@")
+set_and_check(MDS_SYSCONFIG_DIR "@PACKAGE_SYSCONFIG_INSTALL_DIR@")
+
+check_required_components(mds)

@@ -1,0 +1,468 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 22,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "ninja-windows-debug",
+      "displayName": "ninja-windows-debug-x64",
+      "description": "Sets Ninja generator, compilers, x64 architecture, build and install directory, debug build type",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": "C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "BUILD_TESTING": true,
+        "BUILD_SHARED_LIBS": false
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [ "Windows" ]
+        }
+      }
+    },
+    {
+      "name": "ninja-windows-release",
+      "displayName": "ninja-windows-release-x64",
+      "description": "Sets Ninja generator, compilers, x64 architecture, build and install directory, release build type",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": "C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "BUILD_TESTING": false,
+        "BUILD_SHARED_LIBS": false
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [ "Windows" ]
+        }
+      }
+    },
+    {
+      "name": "ninja-linux-debug",
+      "displayName": "ninja-linux-debug-x64",
+      "description": "Sets Ninja generator, compilers, build and install directory, debug build type",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": "~/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "BUILD_TESTING": true,
+        "BUILD_SHARED_LIBS": false
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [
+            "Linux"
+          ]
+        }
+      }
+    },
+    {
+      "name": "ninja-linux-release",
+      "displayName": "ninja-linux-release-x64",
+      "description": "Sets Ninja generator, compilers, build and install directory, release build type",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": "~/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "BUILD_TESTING": false,
+        "BUILD_SHARED_LIBS": false
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [
+            "Linux"
+          ]
+        }
+      }
+    },
+    {
+      "name": "unix-linux-debug",
+      "displayName": "unix-linux-debug-x64",
+      "description": "Sets Unix Makefile generator, compilers, build and install directory, debug build type",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": "~/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "BUILD_TESTING": true,
+        "BUILD_SHARED_LIBS": false
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [
+            "Linux"
+          ]
+        }
+      }
+    },
+    {
+      "name": "unix-linux-release",
+      "displayName": "unix-linux-release-x64",
+      "description": "Sets Unix Makefile generator, compilers, build and install directory, release build type",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": "~/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "BUILD_TESTING": false,
+        "BUILD_SHARED_LIBS": false
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [
+            "Linux"
+          ]
+        }
+      }
+    },
+    {
+      "name": "ninja-shared-linux-release",
+      "displayName": "ninja-shared-linux-release-x64",
+      "description": "Sets Ninja generator, compilers, build and install directory, release build type",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": "~/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "BUILD_TESTING": false,
+        "BUILD_SHARED_LIBS": true
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [
+            "Linux"
+          ]
+        }
+      }
+    },
+    {
+      "name": "ninja-shared-linux-debug",
+      "displayName": "ninja-shared-linux-debug-x64",
+      "description": "Sets Ninja generator, compilers, build and install directory, debug build type",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": "~/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "BUILD_TESTING": true,
+        "BUILD_SHARED_LIBS": true
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [
+            "Linux"
+          ]
+        }
+      }
+    },
+    {
+      "name": "msvc-windows-debug",
+      "displayName": "msvc-windows-debug-x64",
+      "description": "Sets MSVC generator, compilers, x64 architecture, build and install directory, debug build type",
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": "C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "BUILD_TESTING": true,
+        "BUILD_SHARED_LIBS": false
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [
+            "Windows"
+          ]
+        }
+      }
+    },
+    {
+      "name": "msvc-windows-release",
+      "displayName": "msvc-windows-release-x64",
+      "description": "Sets MSVC generator, compilers, x64 architecture, build and install directory, release build type",
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": "C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "BUILD_TESTING": false,
+        "BUILD_SHARED_LIBS": false
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [
+            "Windows"
+          ]
+        }
+      }
+    },
+    {
+      "name": "ninja-shared-windows-debug",
+      "displayName": "ninja-shared-windows-debug-x64",
+      "description": "Sets Ninja generator, compilers, x64 architecture, build and install directory, debug build type",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": "C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "BUILD_TESTING": true,
+        "BUILD_SHARED_LIBS": true
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [ "Windows" ]
+        }
+      }
+    },
+    {
+      "name": "ninja-shared-windows-release",
+      "displayName": "ninja-shared-windows-release-x64",
+      "description": "Sets Ninja generator, compilers, x64 architecture, build and install directory, release build type",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": "C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "BUILD_TESTING": false,
+        "BUILD_SHARED_LIBS": true
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [ "Windows" ]
+        }
+      }
+    },
+    {
+      "name": "msvc-shared-windows-release",
+      "displayName": "msvc-shared-windows-release-x64",
+      "description": "Sets MSVC generator, compilers, x64 architecture, build and install directory, release build type",
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}",
+        "CMAKE_TOOLCHAIN_FILE": "C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        "BUILD_TESTING": true,
+        "BUILD_SHARED_LIBS": true
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [
+            "Windows"
+          ]
+        }
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "msvc-build-preset-debug",
+      "description": "",
+      "displayName": "msvc-windows-build-preset-debug",
+      "configurePreset": "msvc-windows-debug"
+    },
+    {
+      "name": "msvc-build-preset-release",
+      "description": "",
+      "displayName": "msvc-windows-build-preset-release",
+      "configurePreset": "msvc-windows-release"
+    },
+    {
+      "name": "ninja-build-preset-debug",
+      "description": "",
+      "displayName": "ninja-windows-build-preset-debug",
+      "configurePreset": "ninja-windows-debug"
+    },
+    {
+      "name": "ninja-build-preset-release",
+      "description": "",
+      "displayName": "ninja-windows-build-preset-release",
+      "configurePreset": "ninja-windows-release"
+    },
+    {
+      "name": "linux-build-preset-release",
+      "description": "",
+      "displayName": "linux-build-preset-release",
+      "configurePreset": "ninja-linux-release"
+    },
+    {
+      "name": "linux-build-preset-debug",
+      "description": "",
+      "displayName": "linux-build-preset-debug",
+      "configurePreset": "ninja-linux-debug"
+    },
+    {
+      "name": "unix-build-preset-debug",
+      "description": "",
+      "displayName": "unix-build-preset-debug",
+      "configurePreset": "unix-linux-debug"
+    },
+    {
+      "name": "unix-build-preset-release",
+      "description": "",
+      "displayName": "unix-build-preset-release",
+      "configurePreset": "unix-linux-release"
+    },
+    {
+      "name": "linux-build-shared-preset-release",
+      "description": "",
+      "displayName": "linux-build-shared-preset-release",
+      "configurePreset": "ninja-shared-linux-release"
+    },
+    {
+      "name": "linux-build-shared-preset-debug",
+      "description": "",
+      "displayName": "linux-build-shared-preset-debug",
+      "configurePreset": "ninja-shared-linux-debug"
+    },
+    {
+      "name": "msvc-build-shared-preset-release",
+      "description": "",
+      "displayName": "msvc-build-shared-preset-release",
+      "configurePreset": "msvc-shared-windows-release"
+    },
+    {
+      "name": "msvc-build-shared-preset-debug",
+      "description": "",
+      "displayName": "msvc-build-shared-preset-debug",
+      "configurePreset": "msvc-shared-windows-release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "msvc-test-preset-debug",
+      "description": "",
+      "displayName": "msvc-test-preset-debug-x64",
+      "configurePreset": "msvc-windows-debug",
+      "output": { "outputOnFailure": true },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
+    },
+    {
+      "name": "msvc-test-preset-release",
+      "description": "",
+      "displayName": "msvc-test-preset-release-x64",
+      "configurePreset": "msvc-windows-release",
+      "output": { "outputOnFailure": true },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
+    },
+    {
+      "name": "linux-test-preset-debug",
+      "description": "",
+      "displayName": "linux-test-preset-debug",
+      "configurePreset": "ninja-linux-debug",
+      "output": { "outputOnFailure": true },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
+    },
+    {
+      "name": "linux-test-preset-release",
+      "description": "",
+      "displayName": "linux-test-preset-release",
+      "configurePreset": "ninja-linux-release",
+      "output": { "outputOnFailure": true },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
+    },
+    {
+      "name": "ninja-test-preset-release",
+      "description": "",
+      "displayName": "ninja-test-preset-release",
+      "configurePreset": "ninja-windows-release",
+      "output": { "outputOnFailure": true },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
+    },
+    {
+      "name": "ninja-test-preset-debug",
+      "description": "",
+      "displayName": "ninja-test-preset-debug",
+      "configurePreset": "ninja-windows-debug",
+      "output": { "outputOnFailure": true },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
+    },
+    {
+      "name": "unix-test-preset-debug",
+      "description": "",
+      "displayName": "unix-test-preset-debug",
+      "configurePreset": "unix-linux-debug",
+      "output": { "outputOnFailure": true },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
+    },
+    {
+      "name": "msvc-test-shared-preset-release",
+      "description": "",
+      "displayName": "msvc-test-shared-preset-release",
+      "configurePreset": "msvc-shared-windows-release"
+    },
+    {
+      "name": "msvc-test-shared-preset-debug",
+      "description": "",
+      "displayName": "msvc-test-shared-preset-debug",
+      "configurePreset": "msvc-shared-windows-release"
+    }
+  ]
+}

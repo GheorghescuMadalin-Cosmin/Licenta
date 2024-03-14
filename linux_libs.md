@@ -1,0 +1,1 @@
+libgl-dev libxi-dev libxmu-dev libxinerama-dev libxcursor-dev xorg-dev libglu1-mesa-dev pkg-config libwayland-dev libxkbcommon-dev libegl1-mesa-dev
