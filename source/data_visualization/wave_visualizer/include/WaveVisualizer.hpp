@@ -38,7 +38,7 @@ namespace visualizer
         uint64_t handle_;
         std::string name_;
         MeasurementObjectType type_;
-        std::map<uint64_t, std::map<uint64_t,int>> history_;
+        std::map<uint64_t, std::vector<double>> history_;
         bool showGui_;
         std::mutex mtx_;
         int maxPkgInBuffer_;

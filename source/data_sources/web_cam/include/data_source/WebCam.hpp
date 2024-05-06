@@ -29,6 +29,7 @@ namespace data_source
             bool showGui_;
             cv::VideoCapture cap;
             cv::CascadeClassifier carClassifier;
+            cv::CascadeClassifier pedestrianClassifier;
             cv::Mat frame;
             uint8_t instanceNumber_;
             uint64_t handle_;

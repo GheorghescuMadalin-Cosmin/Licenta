@@ -2,7 +2,6 @@
 #include <ReadFile.hpp>
 #include <defs/GuiDefs.hpp>
 #include <imgui_internal.h>
-#include <data_types/SineWave.h>
 #include <implot.h>
 
 visualizer::ReadFile::ReadFile(InterfaceAccess* interfaceAccess, uint8_t nb, const std::string& name, std::function<uint64_t(uint8_t, MeasurementObjectType)> handle):
@@ -150,7 +149,7 @@ void visualizer::ReadFile::readWebcamPackage()
         }
 
         dataDistributionInterface_->distributeData(pkg);
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000)); 
+        std::this_thread::sleep_for(std::chrono::milliseconds(80)); 
     }
 
     file2.close();

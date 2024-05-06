@@ -138,13 +138,7 @@ namespace processors
                         ImGui::TableSetColumnIndex(3);
                         ImGui::Text("%" PRIu64, pkg->size);
                         ImGui::TableSetColumnIndex(4);
-                        auto data = static_cast<const unsigned char*>(pkg->payload);
-                        ImGui::TextUnformatted("0x");
-                        for (std::size_t i = 0; i < pkg->size; ++i) 
-                        {
-                            ImGui::Text("%02X", static_cast<unsigned int>(data[i]));
-                            if (i < pkg->size - 1) ImGui::SameLine(); // Pentru a afișa octeții în aceeași linie
-                        }
+                        ImGui::Text("0x%" PRIx64, pkg->payload);
                     }
                     ImGui::EndTable();
                 }

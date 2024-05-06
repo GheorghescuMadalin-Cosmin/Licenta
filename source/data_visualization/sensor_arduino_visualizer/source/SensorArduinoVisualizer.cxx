@@ -2,7 +2,6 @@
 #include <SensorArduinoVisualizer.hpp>
 #include <defs/GuiDefs.hpp>
 #include <imgui_internal.h>
-#include <data_types/SineWave.h>
 #include <implot.h>
 
 visualizer::SensorArduinoVisualizer::SensorArduinoVisualizer(InterfaceAccess* interfaceAccess, uint8_t nb, const std::string& name, std::function<uint64_t(uint8_t, MeasurementObjectType)> handle):
@@ -46,9 +45,8 @@ bool visualizer::SensorArduinoVisualizer::validatePackage(DataPackageCPtr pkg)
     if (pkg->type == PackageType::arduino)
     {   
         DataPackage* dataPackage = pkg.get();
-        int* dataPtr = static_cast<int*>(dataPackage->payload);
-        int extractedValue = *dataPtr;
         packagesBuffer_.push_back(pkg);
+        
         if (packagesBuffer_.size() > static_cast<size_t>(maxPkgInBuffer_))
         {
             packagesBuffer_.erase(packagesBuffer_.begin(), packagesBuffer_.begin() + (packagesBuffer_.size() - static_cast<size_t>(maxPkgInBuffer_)));
@@ -113,48 +111,46 @@ void visualizer::SensorArduinoVisualizer::show(ImGuiContext* ctx)
     }
 
   if (showGui_)
-  {
-    std::lock_guard<std::mutex> lock(mtx_);
-    ImGui::Begin(name_.c_str(), &showGui_, ImGuiWindowFlags_AlwaysAutoResize);
-    int lastExtractedValue = 0;
-    
-    for(auto const& pkg : packagesBuffer_)
-    {  
-        DataPackage* dataPackage = pkg.get();
-        int* dataPtr = static_cast<int*>(dataPackage->payload);
-        int extractedValue = *dataPtr;
-        
-        lastExtractedValue = extractedValue;
+   {
+        std::lock_guard<std::mutex> lock(mtx_);
+        ImGui::Begin(name_.c_str(), &showGui_, ImGuiWindowFlags_AlwaysAutoResize);
+        int lastExtractedValue = 0;
+
+        for(auto const& pkg : packagesBuffer_)
+        {  
+            DataPackage* dataPackage = pkg.get();
+            int* dataPtr = static_cast<int*>(dataPackage->payload);
+            int extractedValue = *dataPtr;
+            
+            lastExtractedValue = extractedValue;
+        }
+
+        if (lastExtractedValue < 10)
+        {  
+            float pulseFactor = sin(glfwGetTime() * 5.0f) * 0.5f + 0.5f;
+
+            ImVec4 warningColor = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
+            ImVec4 backgroundColor = ImGui::GetStyleColorVec4(ImGuiCol_WindowBg);
+            ImVec4 interpolatedColor = ImVec4
+            (
+                backgroundColor.x + (warningColor.x - backgroundColor.x) * pulseFactor,
+                backgroundColor.y + (warningColor.y - backgroundColor.y) * pulseFactor,
+                backgroundColor.z + (warningColor.z - backgroundColor.z) * pulseFactor,
+                1.0f
+            );
+
+            ImGui::PushStyleColor(ImGuiCol_Text, interpolatedColor);
+            ImGui::SetWindowFontScale(1.5f);
+            ImGui::Text("Distanta obiect: %d cm", lastExtractedValue);
+            ImGui::PopStyleColor();
+        }
+        else
+        {   
+            ImGui::SetWindowFontScale(1.5f);
+            ImGui::Text("Distanta obiect: %d cm", lastExtractedValue);
+        }
+
     }
-
-    if (lastExtractedValue < 10)
-    {  
-        // Calculează un factor pentru interpolarea între culori
-        float pulseFactor = sin(glfwGetTime() * 5.0f) * 0.5f + 0.5f;
-
-        // Interpolarea între roșu și culoarea de fundal originală
-        ImVec4 warningColor = ImVec4(1.0f, 0.0f, 0.0f, 1.0f);
-        ImVec4 backgroundColor = ImGui::GetStyleColorVec4(ImGuiCol_WindowBg);
-        ImVec4 interpolatedColor = ImVec4(
-            backgroundColor.x + (warningColor.x - backgroundColor.x) * pulseFactor,
-            backgroundColor.y + (warningColor.y - backgroundColor.y) * pulseFactor,
-            backgroundColor.z + (warningColor.z - backgroundColor.z) * pulseFactor,
-            1.0f
-        );
-
-        // Setează culoarea textului și afișează textul pulsând
-        ImGui::PushStyleColor(ImGuiCol_Text, interpolatedColor);
-        ImGui::SetWindowFontScale(1.5f);
-        ImGui::Text("Distanta obiect: %d cm", lastExtractedValue);
-        ImGui::PopStyleColor();
-    }
-    else
-    {   
-        ImGui::SetWindowFontScale(1.5f);
-        ImGui::Text("Distanta obiect: %d cm", lastExtractedValue);
-    }
-
-  }
 
     ImGui::End();
 } 

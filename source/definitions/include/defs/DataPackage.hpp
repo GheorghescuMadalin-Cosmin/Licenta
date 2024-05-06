@@ -28,7 +28,25 @@ struct DataPackage
 
     }
 
+     DataPackage(void* cStruct, size_t structSize,PackageType typeP, bool copy = false, uint64_t handle = 0)
+    {
+        size = structSize;
+        type = typeP;
+        sourceHandle = handle;
+        timestamp = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
+        if (copy)
+        {
+            payload = new uint8_t[structSize];
+            
+            std::memcpy(payload, cStruct, size);
+        }
+        else
+        {
+            payload = cStruct;
+        }
+    }
+    
     DataPackage(void* cStruct, size_t structSize, bool copy = false, uint64_t handle = 0)
     {
         size = structSize;
@@ -48,24 +66,7 @@ struct DataPackage
         }
     }
     
-    DataPackage(void* cStruct, size_t structSize,PackageType typeP, bool copy = false, uint64_t handle = 0)
-    {
-        size = structSize;
-        type = typeP;
-        sourceHandle = handle;
-        timestamp = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-
-        if (copy)
-        {
-            payload = new uint8_t[structSize];
-            
-            std::memcpy(payload, cStruct, size);
-        }
-        else
-        {
-            payload = cStruct;
-        }
-    }
+   
     /*!
     *   @brief Data package destructor. Delete the payload if it exists using the delete[] operator.
     */

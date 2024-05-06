@@ -2,7 +2,6 @@
 #include <WebCamVisualizer.hpp>
 #include <defs/GuiDefs.hpp>
 #include <imgui_internal.h>
-#include <data_types/SineWave.h>
 #include <implot.h>
 
 visualizer::WebcamVisualizer::WebcamVisualizer(InterfaceAccess* interfaceAccess, uint8_t nb, const std::string& name, std::function<uint64_t(uint8_t, MeasurementObjectType)> handle):
@@ -118,34 +117,35 @@ void visualizer::WebcamVisualizer::show(ImGuiContext* ctx)
         std::lock_guard<std::mutex> lock(mtx_);
         ImGui::Begin(name_.c_str(), &showGui_, ImGuiWindowFlags_AlwaysAutoResize);
         cv::namedWindow("Frame", cv::WINDOW_NORMAL);
-      for (auto it = packagesBuffer_.begin(); it != packagesBuffer_.end(); )
-     {
-        DataPackagePtr pkg = *it;
-        DataPackage* dataPackage = pkg.get();
-        unsigned char* rawData = static_cast<unsigned char*>(dataPackage->payload);
-        size_t dataSize = dataPackage->size; 
-        int height = 480;  
-        int width = 640;  
-        int type = 16;  
-        cv::Mat reconstructedFrame(height, width, type, rawData);
 
-        GLuint textureID;
-        glGenTextures(1, &textureID);
-        glBindTexture(GL_TEXTURE_2D, textureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, reconstructedFrame.cols, reconstructedFrame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, reconstructedFrame.data);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        cv::imshow("Frame", reconstructedFrame);
+        for (auto it = packagesBuffer_.begin(); it != packagesBuffer_.end(); )
+        {
+            DataPackagePtr pkg = *it;
+            DataPackage* dataPackage = pkg.get();
+            unsigned char* rawData = static_cast<unsigned char*>(dataPackage->payload);
+            int height = 480;  
+            int width = 640;  
+            int type = 16;  
+            cv::Mat reconstructedFrame(height, width, type, rawData);
 
-        if (glIsTexture(textureID) == GL_TRUE)
-        {
-          it = packagesBuffer_.erase(it); 
+            GLuint textureID;
+            glGenTextures(1, &textureID);
+            glBindTexture(GL_TEXTURE_2D, textureID);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, reconstructedFrame.cols, reconstructedFrame.rows, 0, GL_RGB, GL_UNSIGNED_BYTE, reconstructedFrame.data);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            cv::imshow("Frame", reconstructedFrame);
+
+            if (glIsTexture(textureID) == GL_TRUE)
+            {
+                it = packagesBuffer_.erase(it); 
+            }
+            
+            else
+            {
+                ++it;
+            }
         }
-        else
-        {
-          ++it;
-        }
-     }
         ImGui::End();
     }
 }

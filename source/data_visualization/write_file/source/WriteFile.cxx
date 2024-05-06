@@ -2,7 +2,6 @@
 #include <WriteFile.hpp>
 #include <defs/GuiDefs.hpp>
 #include <imgui_internal.h>
-#include <data_types/SineWave.h>
 #include <implot.h>
 
 visualizer::WriteFile::WriteFile(InterfaceAccess* interfaceAccess, uint8_t nb, const std::string& name, std::function<uint64_t(uint8_t, MeasurementObjectType)> handle):

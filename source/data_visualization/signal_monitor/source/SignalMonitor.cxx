@@ -2,8 +2,6 @@
 #include <SignalMonitor.hpp>
 #include <defs/GuiDefs.hpp>
 #include <imgui_internal.h>
-#include <data_types/SineWave.h>
-
 
 visualizer::SignalMonitor::SignalMonitor(InterfaceAccess* interfaceAccess, uint8_t nb, const std::string& name, std::function<uint64_t(uint8_t, MeasurementObjectType)> handle):
     interfaceAccess_(interfaceAccess),

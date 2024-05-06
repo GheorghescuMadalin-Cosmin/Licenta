@@ -2,7 +2,6 @@
 #include <defs/SignalExtraction.hpp>
 #include <defs/MdsInterface.hpp>
 #include <defs/MeasurementObjectDefs.hpp>
-#include <data_types/SineWave.h>
 
 namespace core
 {

@@ -54,7 +54,7 @@ int main(int, char** argv)
 #endif
 
     // Create window with graphics context
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Measurement data solution", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(1280, 720, "Aplicatie pentru sistem de navigare si parcare", NULL, NULL);
     if (window == NULL)
         return 1;
     glfwMakeContextCurrent(window);
@@ -116,7 +116,7 @@ int main(int, char** argv)
                 ImGui::Text("Logging active: %s", engine->isLoggerActive() ? "Yes" : "No");
                 if(ImGui::BeginCombo("Engine reset mode", "Name1"))
                 {
-                    if (ImGui::Selectable("Name1"))
+                    if (ImGui::Selectable("Reset Engine"))
                     {
                         engine->terminate();
                         engine.reset();
@@ -134,11 +134,11 @@ int main(int, char** argv)
 
             if(ImGui::TreeNodeEx("Application informations", ImGuiTreeNodeFlags_Framed))
             {
-                ImGui::Text("Application name: %s", "Measurement data solution");
+                ImGui::Text("Application name: %s", "Aplicatie pentru sistem de navigare si parcare");
                 ImGui::Text("Application version: %s", "0.2.0");
-                ImGui::Text("Application author: %s", "Gheorghescu Cosmin");
+                ImGui::Text("Application author: %s", "Gheorghescu Madalin-Cosmin");
                 ImGui::Text("Application license: %s", "MIT");
-                ImGui::Text("Application description: %s", "Application for measurement and data processing");
+                ImGui::Text("Application description: %s", "Aceasta aplicatie vine in ajutorul soferilor auto pentru o experienta mai placuta de condus");
                 ImGui::TreePop();
             }
 

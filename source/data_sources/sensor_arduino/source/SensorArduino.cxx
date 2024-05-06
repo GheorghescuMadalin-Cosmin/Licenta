@@ -3,8 +3,6 @@
 #include <chrono>
 #include <defs/GuiDefs.hpp>
 #include <imgui_internal.h>
-#include <data_types/SineWave.h>
-
 
 data_source::SerialPort::SerialPort(InterfaceAccess* interfaceAccess,const uint8_t instanceNb,const std::string& name, std::function<uint64_t(uint8_t, MeasurementObjectType)> handle): 
    hSerial(INVALID_HANDLE_VALUE),
@@ -24,7 +22,7 @@ data_source::SerialPort::~SerialPort() {
 void data_source::SerialPort::initialize() {
     logger_ = static_cast<LoggingInterface*>(interfaceAccess_->getInterface("LoggingInterface"));
     logger_->subscribe(name_.c_str(), handle_);
-    hSerial = CreateFileW(L"\\\\.\\COM3", GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    hSerial = CreateFileW(L"\\\\.\\COM4", GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
     if (hSerial == INVALID_HANDLE_VALUE) {
         logger_->log("Failed to open serial port.", handle_, severity::error);
         return;

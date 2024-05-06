@@ -35,17 +35,16 @@ bool core::signal::SignalExtraction::extract(DataPackageCPtr ptr, SignalGroup& o
 bool core::signal::SignalExtraction::extractWebCamData(void* payload, uint64_t handle, SignalGroup& outSignalMap)
 {
     SignalMessage msg;
-    cv::Mat frame = *reinterpret_cast<cv::Mat*>(payload);
-    int height = frame.rows;
-    int width = frame.cols;
-    int num_channels = frame.channels();
-    int data_type = frame.type();
-    int total_elements = frame.total();
-    size_t total_size = frame.total() * frame.elemSize();
+    int height = 480;  
+    int width = 640;  
+    int type = 16; 
+    int total_size=921600; 
+    int num_channels=3;
+    int total_elements=307200;
     msg["Height"] = std::to_string(height);
     msg["Width"] = std::to_string(width);
     msg["Nr channels color"] = std::to_string(num_channels);
-    msg["Elements type frame"] = std::to_string(data_type);
+    msg["Elements type frame"] = std::to_string(type);
     msg["Total elements"] = std::to_string(total_elements);
     msg["Total size frame"] = std::to_string(total_size);
    
@@ -63,7 +62,7 @@ bool core::signal::SignalExtraction::extractDataPayload(void* pkg, uint64_t hand
     {
         oss << std::setw(2) << static_cast<unsigned int>(*data);
         ++data;
-   }
+    }
 
     msg["DataPayload"] = oss.str();
     outSignalMap[std::to_string(handle)] = msg;

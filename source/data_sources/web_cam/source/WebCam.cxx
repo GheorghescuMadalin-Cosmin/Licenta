@@ -3,7 +3,6 @@
 #include <chrono>
 #include <defs/GuiDefs.hpp>
 #include <imgui_internal.h>
-#include <data_types/SineWave.h>
 
 data_source::WebCam::WebCam(InterfaceAccess* interfaceAccess,const uint8_t instanceNb,const std::string& name, std::function<uint64_t(uint8_t, MeasurementObjectType)> handle): 
    interfaceAccess_(interfaceAccess),
@@ -32,18 +31,22 @@ void data_source::WebCam::initialize() {
        logger_->log("USB camera opened successfully.", handle_, severity::information);
     }
 
-    if (!carClassifier.load("C:\\Users\\cosmin\\Desktop\\haarcascade_car.xml")) 
+    if (!carClassifier.load("C:\\Users\\cosmin\\Desktop\\ProiectLicenta\\measurement_data_solution\\haarcascade_car.xml")) 
+    {
+       logger_->log("Error loading cars classifier.", handle_, severity::error);
+       return ;
+    }
+
+    if (!pedestrianClassifier.load("C:\\Users\\cosmin\\Desktop\\ProiectLicenta\\measurement_data_solution\\haarcascade_fullbody.xml")) 
     {
        logger_->log("Error loading pedestrian classifier.", handle_, severity::error);
        return ;
     }
 }
 
-cv::Mat data_source::WebCam::readData() {
+cv::Mat data_source::WebCam::readData() 
+{
     cap >> frame;
-    int height = frame.rows;
-    int width = frame.cols;
-    auto type = frame.type();
     cv::Mat gray;
     cv::cvtColor(frame, gray, cv::COLOR_BGR2GRAY);
     std::vector<cv::Rect> cars;
@@ -53,6 +56,13 @@ cv::Mat data_source::WebCam::readData() {
       cv::rectangle(frame, rect, cv::Scalar(255, 0, 0), 2);
     }
 
+    std::vector<cv::Rect> pedestrians;
+    pedestrianClassifier.detectMultiScale(gray, pedestrians, 1.1, 3, 0 | cv::CASCADE_SCALE_IMAGE, cv::Size(30, 30));
+    for (const auto& rect : pedestrians) 
+    {
+        cv::rectangle(frame, rect, cv::Scalar(0, 0, 255), 2); // Rosu: (B, G, R) = (0, 0, 255)
+    }
+    
     if (frame.empty()) 
     {
        logger_->log("Failed to capture frame." , handle_, severity::error);
@@ -98,7 +108,6 @@ void data_source::WebCam::generate()
         cv::Mat frame =readData();
         void* voidPtr = static_cast<void*>(frame.data);
         size_t dataSize = frame.total() * frame.elemSize();
-        //DataPackagePtr pkg = std::make_shared<DataPackage>(compressedData.data(), compressedData.size(), true, handle_);  
         DataPackagePtr pkg = std::make_shared<DataPackage>(voidPtr,dataSize,PackageType::webcam,true, handle_);
         {
             std::lock_guard<std::mutex> lock(processingMtx_);

@@ -2,7 +2,6 @@
 #include <WaveVisualizer.hpp>
 #include <defs/GuiDefs.hpp>
 #include <imgui_internal.h>
-#include <data_types/SineWave.h>
 #include <implot.h>
 
 visualizer::WaveVisualizer::WaveVisualizer(InterfaceAccess* interfaceAccess, uint8_t nb, const std::string& name, std::function<uint64_t(uint8_t, MeasurementObjectType)> handle):
@@ -43,27 +42,25 @@ const std::string& visualizer::WaveVisualizer::getName()
 
 bool visualizer::WaveVisualizer::validatePackage(DataPackageCPtr pkg)
 {
-    std::lock_guard<std::mutex> lock(mtx_);
-    if (pkg->payload == nullptr)
-    {
+   std::lock_guard<std::mutex> lock(mtx_);
+
+   if (pkg->type==PackageType::arduino && pkg->payload == nullptr)
+   {
         return false;
-    }
+   }
    
    if(pkg->type==PackageType::arduino)
    {    
         DataPackage* dataPackage = pkg.get();
         int* dataPtr = static_cast<int*>(dataPackage->payload);
         int extractedValue = *dataPtr;
-        history_[pkg->sourceHandle][pkg->timestamp] = extractedValue;
+        history_[pkg->sourceHandle].push_back(extractedValue);
 
         for (auto& [handle, history] : history_)
         {
-            if(history.size() > static_cast<size_t>(maxPkgInBuffer_))
+            if(history.size() > (size_t)maxPkgInBuffer_)
             {
-                auto numToRemove = history.size() - static_cast<size_t>(maxPkgInBuffer_);
-                auto it = history.begin();
-                std::advance(it, numToRemove); 
-                history.erase(history.begin(), it); 
+                history.erase(history.begin(), history.begin() +  (history.size() - (size_t)maxPkgInBuffer_));
             }
         }
    }
@@ -126,22 +123,12 @@ void visualizer::WaveVisualizer::show(ImGuiContext* ctx)
     {
         std::lock_guard<std::mutex> lock(mtx_);
         ImGui::Begin(name_.c_str());
-        if (ImPlot::BeginPlot(name_.c_str(), "TimeStamp", "Distance (cm)")) 
+        if (ImPlot::BeginPlot(name_.c_str(), "Point number", "Distance")) 
         {
-            for (const auto& history : history_)
-            {   
-                auto handle = history.first;
-                auto stats= history.second;
-                std::vector<double> timestamps;
-                std::vector<double> values;
-                for (const auto& dataPoint : stats)
-                {   
-                    timestamps.push_back(static_cast<double>(dataPoint.first));
-                    values.push_back(static_cast<double>(dataPoint.second));
-                }
-
-                ImPlot::PlotLine(std::to_string(handle).c_str(), timestamps.data(), values.data(), static_cast<int>(stats.size()));
-                        
+            // Plot the data
+            for (auto [handle, history] : history_)
+            {
+                ImPlot::PlotLine(std::to_string(handle).c_str(), history.data(), (int)history.size(), 3.0f);
             }
 
             // End the ImPlot plot
