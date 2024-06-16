@@ -1,0 +1,20 @@
+#include <NewPing.h>
+#define TRIGGER_PIN  7  // Pinul conectat la TRIG
+#define ECHO_PIN     8  // Pinul conectat la ECHO
+#define BUZZER_PIN   12  // Pinul conectat la Buzzer
+#define MAX_DISTANCE 200 // Distanța maximă măsurată de senzor (în cm)
+
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE);
+
+void setup() {
+  Serial.begin(9600); // Inițializarea portului serial la 9600 bps
+  pinMode(BUZZER_PIN, OUTPUT); // Setăm pinul buzzer-ului ca ieșire
+}
+
+void loop() {
+  delay(100); // Așteaptă 1000ms între măsurători
+
+  unsigned int distanta = sonar.ping_cm(); // Măsoară distanța în cm
+  Serial.println(distanta); // Trimite distanța prin portul serial
+  
+}
